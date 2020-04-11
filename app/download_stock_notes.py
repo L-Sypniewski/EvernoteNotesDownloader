@@ -14,9 +14,9 @@ def terminate_if_newer_API_available(is_version_ok):
 
 
 IS_SANDBOX = sys.argv[1] in ['true', "True"]
-TOKEN_FILEPATH = sys.argv[2]
-NOTEBOOK_NAME = sys.argv[3]
-SAVED_NOTES_FOLDER_PATH = "DownloadedNotes"
+SAVED_NOTES_FOLDER_PATH = sys.argv[2]
+TOKEN_FILEPATH = sys.argv[3]
+NOTEBOOK_NAME = sys.argv[4]
 
 token_provider = TokenProvider(filepath=TOKEN_FILEPATH)
 auth_token = token_provider.get_token(IS_SANDBOX)
@@ -26,7 +26,7 @@ is_version_ok = APIVersionValidator().validate_api_version(evernote_client)
 terminate_if_newer_API_available(is_version_ok)
 
 
-def notes_filter(note): return not note.title.startswith('_')
+def notes_filter(note): return True#not note.title.startswith('_')
 
 
 notes = NotesProvider(NOTEBOOK_NAME).save_notes_content(
